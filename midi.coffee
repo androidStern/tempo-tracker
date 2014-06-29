@@ -3,7 +3,7 @@
 ------------------------------------------------
 ###
 
-{ms_per_16th} = require './regress'
+{Guess_msp16th} = require './regress'
 {msp16th_to_bpm, average, mode} = require './helpers'
 
 
@@ -19,6 +19,10 @@ num_bpms_to_use = 10
 
 num_times_to_use = 10
 
+min_bpm = 80
+
+max_bpm = 160
+
 
 ###
   SETUP
@@ -28,9 +32,12 @@ num_times_to_use = 10
 input = new midi.input()
 
 input.openPort(0)
+
 console.log input.getPortName(0)
 
 time = process.hrtime() # Global Start Time
+
+guess_msp16th = Guess_msp16th(min_bpm, max_bpm)
 
 ###
   GLOBAL STORAGE
@@ -66,8 +73,7 @@ do_calc = ->
   data = _.last(times, num_times_to_use)
   offset = _.first(data)
   new_data = data.map (el)-> el - offset
-  res = msp16th_to_bpm ms_per_16th(new_data)["guess"]
-  return res
+  msp16th_to_bpm guess_msp16th(new_data)["guess"]
 
 
 log_results = (obj)->
