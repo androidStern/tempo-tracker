@@ -1,18 +1,15 @@
-MidiClock = require 'midi-clock'
+{bpm_to_mspb} = require "./helpers"
 midi = require('midi')
-
 output = new midi.output()
-
 output.openVirtualPort("AMS OUT")
 
-clock = MidiClock()
+bang = -> output.sendMessage [176,22,1]
 
-clock.setTempo(120)
+Clock = (bpm)->
+  interval = bpm_to_mspb(bpm)
+  console.log "interval: #{interval}"
+  console.log "running...."
+  setInterval bang, interval
 
-clock.start()
 
-clock.on 'position', (p)->
-  microPosition = p % 24
-  if microPosition is 0
-    console.log "Beat: #{p / 24}"
-    output.sendMessage [176,22,1]
+Clock(100)

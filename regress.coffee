@@ -12,7 +12,7 @@ _ = require 'lodash'
 ------------------------------------------------
 ###
 
-Guess_bpm = (min_bpm = 85, max_bpm = 160)->
+Guess_msp16th = (min_bpm = 85, max_bpm = 160)->
 
   guesses = _.range(min_bpm, max_bpm, 1).map(bpm_to_msp16th)
 
@@ -28,4 +28,4 @@ Guess_bpm = (min_bpm = 85, max_bpm = 160)->
 ------------------------------------------------
 ###
 
-module.exports["Guess_bpm"] = Guess_bpm
+module.exports["Guess_msp16th"] = Guess_msp16th

@@ -1,9 +1,12 @@
+
+forgiveness = 15
+
 find_nearest_multiple = (base_ms, test_point)->
-  # base_ms = base_ms / 4
   Math.round(test_point / base_ms) * base_ms
 
 delta_from_nearest_multiple = (base)-> (test)->
-  Math.abs find_nearest_multiple(base, test) - test
+  delta = Math.abs find_nearest_multiple(base, test) - test
+  delta * forgiveness
 
 cost_fn = (data)-> (base)->
   delta_fn = delta_from_nearest_multiple(base)
